@@ -20,7 +20,7 @@ sleep 5
 
 JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 tom_major_vers=10
-tom_version=10.1.15
+tom_version=10.1.16
 TOMCAT_URL=https://dlcdn.apache.org/tomcat/tomcat-${tom_major_vers}/v${tom_version}/bin/apache-tomcat-${tom_version}.tar.gz
 folder_path=/opt/tomcat/10_1
 
