@@ -19,10 +19,10 @@ echo "###################"
 sleep 5
 
 JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-tom_major_vers=10
-tom_version=10.1.16
+tom_major_vers=9
+tom_version=9.0.83
 TOMCAT_URL=https://dlcdn.apache.org/tomcat/tomcat-${tom_major_vers}/v${tom_version}/bin/apache-tomcat-${tom_version}.tar.gz
-folder_path=/opt/tomcat/10_1
+folder_path=/opt/tomcat/9_1
 
 function check_java_home {
     if [ -z ${JAVA_HOME} ]
@@ -43,7 +43,7 @@ echo "###########################"
 echo 'Installing tomcat server...'
 echo "###########################"
 echo 'Checking for JAVA_HOME...'
-check_java_home
+
 sleep 3
 
 echo "###################################"
@@ -142,11 +142,11 @@ EOF
   limitations under the License.
 -->
 <Context antiResourceLocking="false" privileged="true" >
-  <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
+<CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
                    sameSiteCookies="strict" />
-<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
-  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+<Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>    
 EOF
 
@@ -154,9 +154,10 @@ EOF
     sudo mv -f context.xml ${folder_path}/webapps/manager/META-INF
     sudo chmod 644 ${folder_path}/webapps/host-manager/META-INF/context.xml
     sudo chmod 644 ${folder_path}/webapps/manager/META-INF/context.xml
+    
     sudo touch tomcat-users.xml
-
-        cat <<EOF > tomcat-users.xml
+    sudo chmod 777 ${folder_path}/tomcat-users.xml
+    cat <<EOF > tomcat-users.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
