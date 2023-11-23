@@ -122,7 +122,7 @@ EOF
    
     cd "${folder_path}"
     sudo touch context.xml
-    #sudo chmod 640 ${folder_path}/context.xml
+    sudo chmod 777 ${folder_path}/context.xml
     cat <<EOF > context.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
@@ -149,11 +149,14 @@ EOF
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>    
 EOF
+
     sudo cp -f context.xml ${folder_path}/webapps/host-manager/META-INF
     sudo mv -f context.xml ${folder_path}/webapps/manager/META-INF
-
+    sudo chmod 644 ${folder_path}/webapps/host-manager/META-INF/context.xml
+    sudo chmod 644 ${folder_path}/webapps/manager/META-INF/context.xml
     sudo touch tomcat-users.xml
-    cat <<EOF > tomcat-users.xml
+
+        cat <<EOF > tomcat-users.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
@@ -212,7 +215,7 @@ EOF
 </tomcat-users>
 EOF
     sudo mv -f tomcat-users.xml ${folder_path}/conf
-    sudo chmod 670 ${folder_path}/conf/tomcat-users.xml
+    sudo chmod 644 ${folder_path}/conf/tomcat-users.xml
     sudo systemctl daemon-reload
 
     echo 'Starting tomcat server....'
