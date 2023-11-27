@@ -1,0 +1,21 @@
+FROM ubuntu:latest
+
+#installing java
+RUN apt install fontconfig openjdk-17-jre -y
+
+#Creating work directory
+RUN mkdir /opt/tomcat
+WORKDIR /opt/tomcat
+
+#Downloading apache-tomcat archive and exctracting it
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz .
+RUN tar -xvzf apache-tomcat-9.0.83.tar.gz
+
+#Moving extracted files to working directory
+RUN mv apache-tomcat-9.0.83/* /opt/tomcat
+
+#Exposind port
+EXPOSE 8080
+
+#Runinig tomcat server
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
